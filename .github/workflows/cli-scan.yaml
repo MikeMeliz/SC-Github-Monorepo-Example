@@ -3,7 +3,7 @@ name: SonarCloud CLI Python Scan
 on:
   push:
     branches:
-      - feature/update-all
+      - master
     paths:
       - '.github/workflows/cli-scan.yaml'
       - '.gitignore'
