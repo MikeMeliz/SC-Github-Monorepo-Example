@@ -7,6 +7,6 @@ do
 done
 
 dotnet sonarscanner begin /k:"demo:gitlab-ci-mono-dotnet" /n:"GitLab-CI / monorepo .Net Core" \
-    /d:"sonar.host.url=$SONAR_HOST_URL" /d:"sonar.login=$SONAR_TOKEN" $allopts
+    /d:"sonar.host.url=$SONAR_HOST_URL" /d:"sonar.login=$SONAR_TOKEN_DOTNET" $allopts
 dotnet build dotnetcore-sample.sln
-dotnet sonarscanner end /d:"sonar.login=${SONAR_TOKEN}"
+dotnet sonarscanner end /d:"sonar.login=${SONAR_TOKEN_DOTNET}"
