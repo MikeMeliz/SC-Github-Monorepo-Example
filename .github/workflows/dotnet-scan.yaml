@@ -1,32 +1,19 @@
-name: SonarQube DotNet Scan
+name: Build
 
 on:
   push:
     branches:
-      - merge_requests
       - master
-      - develop
-    paths:
-      - '.github/workflows/dotnet-scan.yaml'
-      - '.gitignore'
-      - 'comp-dotnet/*.sln'
-      - 'comp-dotnet/project/*.cs*'
   pull_request:
     types: [opened, synchronize, reopened]
-    paths:
-      - '.github/workflows/dotnet-scan.yaml'
-      - '.gitignore'
-      - 'comp-dotnet/*.sln'
-      - 'comp-dotnet/project/*.cs*'
 
-  workflow_dispatch:
 jobs:
   build:
-    name: Build
+    name: Build and analyze
     runs-on: windows-latest
-    permissions: read-all
+    
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
       - name: Set up JDK 17
@@ -55,7 +42,6 @@ jobs:
       - name: Build and analyze
         shell: powershell
         run: |
-          cd .\comp-dotnet
-          ..\.sonar\scanner\dotnet-sonarscanner begin /k:"comp-dotnet" /n:"C# Project" /d:sonar.plugins.downloadOnlyRequired=true /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}"
-          dotnet build dotnetcore-sample.sln
-          ..\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"comp-dotnet" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}"
+          dotnet build
+          .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
