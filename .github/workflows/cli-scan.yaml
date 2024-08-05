@@ -1,11 +1,9 @@
-name: SonarQube CLI Python Scan
+name: SonarCloud CLI Python Scan
 
 on:
   push:
     branches:
-      - merge_requests
-      - master
-      - develop
+      - feature/update-all
     paths:
       - '.github/workflows/cli-scan.yaml'
       - '.gitignore'
@@ -16,26 +14,19 @@ on:
       - '.github/workflows/cli-scan.yaml'
       - '.gitignore'
       - 'comp-cli/**/*'
-  
-
-  workflow_dispatch:
-
-env:
-  SONAR_HOST_URL: <SONARQUBE_URL>
-  SONAR_TOKEN: <SONARQUBE_TOKEN>
-
 jobs:
-  scan-cli:
-    name: SonarQube Scan for CLI
+  sonarcloud:
+    name: SonarCloud Scan for CLI
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-      - uses: sonarsource/sonarqube-scan-action@master
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
         with: 
           projectBaseDir: ./comp-cli
         env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_PYTHON }}
           SONAR_WORKING_DIRECTORY: ./comp-cli
