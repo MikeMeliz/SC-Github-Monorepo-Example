@@ -48,10 +48,10 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
       - name: Build and Analyze with Maven
         env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_MAVEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
           SONAR_PLUGINS_DOWNLOADONLYREQUIRED: true
         run: |
           cd ./comp-maven
-          mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=comp-maven -Dsonar.projectName='Java Maven Project'
+          mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=comp-maven -Dsonar.projectName='comp-maven'
 
