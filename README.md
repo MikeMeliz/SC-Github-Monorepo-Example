@@ -2,7 +2,7 @@
 
 This repository provides an example of using GitHub Actions to scan a monorepo with SonarQube. It contains three separate projects: `comp-cli` (Python), `comp-dotnet` (C#), and `comp-maven` (Java Maven).
 
-## Workflow Separation
+## Workflow Separation 
 
 Each project has its own workflow file in the `.github/workflows` directory. This separation ensures that only the relevant project scans are triggered when changes are made.
 
