@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - master
-      - features/*
+      - feature/*
     paths:
       - '.github/workflows/cli-scan.yaml'
       - '.gitignore'
